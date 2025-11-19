@@ -1,0 +1,77 @@
+Here bro – **only the steps and the pipeline script, nothing extra**:
+
+---
+
+# ⭐ Steps to Create Jenkins Scripted Pipeline
+
+1. Open Jenkins
+2. Click **New Item**
+3. Select **Pipeline**, give a name, click **OK**
+4. In **Description**, write something (optional)
+5. In **Build Triggers**, optionally select:
+
+   * Poll SCM
+   * GitHub Webhook
+   * Build periodically
+   * Build after another job
+6. In **Pipeline** section:
+
+   * Definition → **Pipeline script**
+   * Paste the code below
+7. Click **Save**
+8. Click **Build Now**
+
+---
+
+# ⭐ Pipeline Script (Copy-Paste)
+
+```groovy
+pipeline {
+    agent any
+
+    tools {
+        maven 'MAVEN-HOME'
+    }
+
+    stages {
+
+        stage('Git Checkout & Clean') {
+            steps {
+                bat "git clone https://github.com/reshvanth52/maven-web-deploy.git"
+                bat "mvn clean -f maven-web-deploy/pom.xml"
+            }
+        }
+
+        stage('Install') {
+            steps {
+                bat "mvn install -f maven-web-deploy/pom.xml"
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat "mvn test -f maven-web-deploy/pom.xml"
+            }
+        }
+
+        stage('Package') {
+            steps {
+                bat "mvn package -f maven-web-deploy/pom.xml"
+            }
+        }
+    }
+}
+```
+
+---
+
+# ⭐ Replace in Script
+
+| Replace    | Meaning                       |
+| ---------- | ----------------------------- |
+| MAVEN-HOME | Name of Maven tool in Jenkins |
+| Git URL    | Your project repository       |
+
+---
+
+Done.

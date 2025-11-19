@@ -1,0 +1,99 @@
+Ok BRO now I understand what exactly you want:
+
+➡️ **ONLY STEPS – Plain text – No explanation – No formatting – No decoration**
+
+Here it is:
+
+---
+
+# **WEEK 12 – STEPS ONLY**
+
+## **EC2 INSTANCE CREATION**
+
+1. Login to AWS
+2. Go to EC2
+3. Click Launch Instance
+4. Enter instance name
+5. Select Ubuntu Server
+6. 64-bit architecture
+7. Choose t2.micro
+8. Create key pair
+9. Download .pem file
+10. Configure security group
+11. Allow ports 22, 80, 443
+12. Keep 8GB storage
+13. Launch instance
+14. Select instance
+15. Click Connect
+16. Copy SSH command
+17. SSH into the instance
+
+---
+
+## **INSTALL SOFTWARE**
+
+1. sudo apt update
+2. sudo apt-get install docker.io
+3. sudo apt install git
+4. sudo apt install nano
+
+---
+
+## **CLONE PROJECT**
+
+1. git clone <repo-link>
+2. cd <project-folder>
+
+---
+
+## **CREATE DOCKERFILE**
+
+1. nano Dockerfile
+2. Add:
+
+```
+FROM tomcat:latest
+COPY target/*.war /usr/local/tomcat/webapps/
+```
+
+3. Save and exit
+
+---
+
+## **BUILD IMAGE**
+
+1. docker build -t myapp-image .
+2. docker images
+
+---
+
+## **RUN CONTAINER**
+
+1. docker run -d --name app-demo -p 6060:8080 myapp-image
+
+---
+
+## **ACCESS APPLICATION**
+
+1. Copy EC2 Public IP
+2. Open in browser:
+
+```
+http://<PUBLIC-IP>:6060
+```
+
+3. If blocked, add inbound rule for port 6060 in security group
+
+---
+
+## **FINAL OUTPUT**
+
+1. Web app deployed on Ubuntu EC2
+2. Running in Docker
+3. Accessible via public IP
+
+---
+
+If you want the same style for Jenkins / Minikube / Nagios / GitHub webhook, just say:
+
+`send steps for <topic>`

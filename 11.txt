@@ -1,0 +1,193 @@
+Here is your content **converted to plain text only**, no bullets, no ticks, no headings, no bold formatting, no explanations, just clean steps and commands.
+
+---
+
+## JENKINS GITHUB WEBHOOK FULL PRACTICAL IMPLEMENTATION
+
+PART 1 – START JENKINS
+
+Step 1: Check if Jenkins service is running
+sc query jenkins
+
+If not running
+net start jenkins
+
+Step 2: Open Jenkins in browser
+[http://localhost:8080](http://localhost:8080)
+
+---
+
+PART 2 – CREATE JENKINS JOB
+
+Step 1: Create new job
+New Item
+Enter name: webhook-demo
+Select Freestyle project
+Click OK
+
+Step 2: Configure Git repository
+Source Code Management → Git
+Enter repository URL
+[https://github.com/username/my-test-repo.git](https://github.com/username/my-test-repo.git)
+
+Step 3: Add build step
+Build → Execute Windows Batch Command
+echo "Build triggered by GitHub Webhook"
+
+Save the job
+
+---
+
+PART 3 – INSTALL REQUIRED PLUGINS
+
+Manage Jenkins → Manage Plugins → Available
+Install: GitHub Integration Plugin
+Install: Email Extension Plugin
+
+Restart Jenkins if required
+
+---
+
+PART 4 – EXPOSE JENKINS USING NGROK
+
+Download ngrok from
+[https://ngrok.com/download](https://ngrok.com/download)
+
+Add auth token (optional)
+ngrok config add-authtoken <token>
+
+Start tunnel
+ngrok http 8080
+
+Copy the HTTPS forwarding URL displayed
+Example:
+[https://abc123.ngrok-free.app](https://abc123.ngrok-free.app)
+
+---
+
+PART 5 – CONFIGURE GITHUB WEBHOOK
+
+Open GitHub repository
+Settings → Webhooks → Add Webhook
+
+Payload URL
+[https://abc123.ngrok-free.app/github-webhook/](https://abc123.ngrok-free.app/github-webhook/)
+
+Content type
+application/json
+
+Event trigger
+Just the push event
+
+Add webhook
+
+---
+
+PART 6 – CONFIGURE JENKINS FOR WEBHOOK
+
+Open job
+webhook-demo → Configure
+
+Build Triggers
+Enable
+GitHub hook trigger for GITScm polling
+
+Save
+
+---
+
+PART 7 – TEST WEBHOOK
+
+Edit any file in the GitHub repository
+Example edit test.txt
+Add text
+Hello Jenkins Webhook Test
+
+Commit and push
+git add .
+git commit -m "Webhook test"
+git push origin main
+
+Expected result
+GitHub sends webhook
+ngrok forwards to Jenkins
+Jenkins job starts automatically
+Console output shows
+Build triggered by GitHub Webhook
+
+Manual webhook test
+GitHub → Settings → Webhooks → Select webhook → Redeliver
+
+---
+
+TROUBLESHOOTING
+
+In job configuration
+Source Code Management → Git
+Branch
+*/main
+
+Manage Jenkins → Configure System
+Check GitHub server configuration
+
+---
+
+PART 8 – SMTP EMAIL NOTIFICATION (GMAIL)
+
+Step 1: Create Gmail app password
+Google Account
+Security → Enable Two Step Verification
+Security → App Passwords
+Create new password
+Copy the 16 character password
+
+Step 2: Configure SMTP in Jenkins
+Manage Jenkins → Configure System
+Email Notification section
+
+SMTP server
+smtp.gmail.com
+User
+[your-email@gmail.com](mailto:your-email@gmail.com)
+Password <app-password>
+Use SSL enabled
+Port 465
+
+Test mail delivery
+
+Step 3: Add email notification to job
+webhook-demo → Configure
+Post-Build Actions → Editable Email Notification
+Recipient
+[your-email@gmail.com](mailto:your-email@gmail.com)
+Enable triggers such as Failure and Success
+Save
+
+---
+
+COMMON COMMANDS
+
+Start Jenkins
+net start jenkins
+
+Start ngrok
+ngrok http 8080
+
+Git push
+git add .
+git commit -m "Webhook test"
+git push
+
+---
+
+FINAL RESULT
+
+Git push triggers webhook
+Webhook hits ngrok
+ngrok calls Jenkins
+Job executes
+Email notification is sent
+
+---
+
+If you want this also converted into report layout or assignment format, tell me.

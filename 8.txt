@@ -1,0 +1,227 @@
+Below is **only the clean step-by-step version**, **no extra theory**, **no explanations**, just what to do.
+
+---
+
+# ⭐ WEEK-8 – JENKINS AUTOMATION
+
+## PROJECT: Maven Java (MavenJava_Build → MavenJava_Test)
+
+---
+
+# 🚀 PART 1 – Create Job 1 (MavenJava_Build)
+
+1. Open browser →
+   `http://localhost:8080`
+
+2. Click **New Item**
+
+3. Enter name:
+   `MavenJava_Build`
+
+4. Select **Freestyle project** → OK
+
+5. In **Description** add:
+   `Build job for Maven Java project`
+
+6. Under **Source Code Management**
+
+   * Select **Git**
+   * Repository URL:
+     `https://github.com/<username>/<repo>.git`
+   * Branch:
+     `*/main`
+
+7. Under **Build**
+
+   * Add Build Step → *Invoke top-level Maven targets*
+
+     * Goals: `clean`
+   * Add Build Step → *Invoke top-level Maven targets*
+
+     * Goals: `install`
+
+8. Under **Post-build Actions**
+
+   * Add → *Archive the artifacts*
+
+     * Files: `**/*`
+   * Add → *Build other projects*
+
+     * Project: `MavenJava_Test`
+     * Trigger: `Only if build is stable`
+
+9. Click **Apply → Save**
+
+---
+
+# 🚀 PART 2 – Create Job 2 (MavenJava_Test)
+
+1. Click **New Item**
+
+2. Name: `MavenJava_Test`
+
+3. Select **Freestyle project** → OK
+
+4. In **Description** add:
+   `Test job for Maven Java build`
+
+5. Under **Build Environment**
+
+   * Check: `Delete workspace before build starts`
+
+6. Under **Build Steps**
+
+   * Add Step → *Copy artifacts from another project*
+
+     * Project name: `MavenJava_Build`
+     * Build: `Stable build only`
+     * Artifacts: `**/*`
+   * Add Step → *Invoke top-level Maven targets*
+
+     * Goals: `test`
+
+7. Under **Post-build Actions**
+
+   * Add → *Archive the artifacts*
+
+     * Files: `**/*`
+
+8. Click **Apply → Save**
+
+---
+
+# 🚀 PART 3 – Create Pipeline View
+
+1. Jenkins Dashboard → Click **+**
+2. Name:
+   `MavenJava_Pipeline`
+3. Select: **Build Pipeline View**
+4. Click **OK**
+5. Set:
+
+   * Initial job: `MavenJava_Build`
+6. Save
+
+---
+
+# 🚀 PART 4 – Run Pipeline
+
+1. In pipeline view → Click **Run**
+2. Confirm both jobs run:
+   `MavenJava_Build → MavenJava_Test`
+
+---
+
+# ✔ DONE
+
+This is the shortest, cleanest checklist version for your submission.
+
+
+
+
+
+
+Bro SAY NO MORE ✔
+I am giving you **the cleaned version without extra lines**, same content, tight formatting, just like first one.
+
+---
+
+# ⭐ WEEK-8 – JENKINS AUTOMATION
+
+## PROJECT: MavenWeb (Build → Test → Deploy)
+
+---
+
+# 🚀 PART 1 – Create MavenWeb_Build
+
+1. Jenkins → `http://localhost:8080`
+2. New Item → `MavenWeb_Build`
+3. Freestyle project → OK
+4. Description: `Build job for Maven Web project`
+5. SCM → Git
+   URL: `https://github.com/<you>/MavenWeb_Build.git`
+   Branch: `*/main`
+6. Build Steps
+
+   * Invoke Maven → Goals: `clean`
+   * Invoke Maven → Goals: `install`
+7. Post-build
+
+   * Archive artifacts → `**/*`
+   * Build other projects → `MavenWeb_Test` (Only if stable)
+8. Apply → Save
+
+---
+
+# 🚀 PART 2 – Create MavenWeb_Test
+
+1. New Item → `MavenWeb_Test`
+2. Freestyle project → OK
+3. Description: `Test job for Maven Web project`
+4. Build Environment → Enable `Delete workspace before build`
+5. Build Steps
+
+   * Copy artifacts
+     From project: `MavenWeb_Build`
+     Build: Stable only
+     Files: `**/*`
+   * Invoke Maven → Goals: `test`
+6. Post-build
+
+   * Archive artifacts: `**/*`
+   * Build other projects → `MavenWeb_Deploy`
+7. Apply → Save
+
+---
+
+# 🚀 PART 3 – Create MavenWeb_Deploy
+
+1. New Item → `MavenWeb_Deploy`
+2. Freestyle → OK
+3. Build Environment → Enable `Delete workspace before build`
+4. Copy artifacts
+
+   * From project: `MavenWeb_Test`
+   * Files: `**/*`
+5. Deploy WAR to Tomcat
+
+   * WAR: `**/*.war`
+   * Context: `/webpath`
+   * URL: `http://localhost:8085/`
+   * User: `admin`
+   * Pass: `1234`
+6. Save
+
+---
+
+# 🚀 PART 4 – Create Pipeline View
+
+1. Dashboard → `+`
+2. Name: `MavenWeb_Pipeline`
+3. Select: Build Pipeline View
+4. Initial job: `MavenWeb_Build`
+5. Save
+
+---
+
+# 🚀 PART 5 – RUN
+
+1. Open pipeline view
+2. Click **Run**
+3. Pipeline should run:
+
+```
+MavenWeb_Build → MavenWeb_Test → MavenWeb_Deploy
+```
+
+---
+
+# ✔ DONE
+
+If you want, I can also give:
+
+* ZIP of all 3 repos
+* Jenkinsfile (pipeline script version)
+* Tomcat config
+
+Just tell me.
