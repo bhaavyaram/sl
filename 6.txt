@@ -68,6 +68,39 @@ docker tag myubuntuimage <dockerhub_username>/myubuntuimage
 docker login
 docker push <dockerhub_username>/myubuntuimage
 
+DOCKER-COMPOSE:
+
+mkdir dockerfolder
+cd dockerfolder
+
+notepad docker-compose.yml
+
+version: "3.9"
+
+services:
+  web:
+    image: nginx
+    ports:
+      - "8060:80"
+
+  db:
+    image: tomee
+    ports:
+      - "8061:8080"
+
+SAVE AND CLOSE.
+
+docker-compose up -d
+docker ps
+
+Test in browser:
+http://localhost:8060    # Nginx
+http://localhost:8061    # Tomee
+
+Stop and remove containers:
+docker-compose down
+
+
 
 
 
