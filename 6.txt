@@ -1,0 +1,13 @@
+creatinf image using commit
+docker run -it --name ubuntucontainer ubuntu:latest
+git --version
+apt update
+apt install git -y
+git --version
+exit
+docker commit ubuntucontainer img-commit-1
+docker images
+docker tag img-commit-1 <dockerhub_username>/img-commit-1
+docker login
+docker push <dockerhub_username>/img-commit-1
+docker run -it <dockerhub_username>/img-commit-1
