@@ -1,0 +1,26 @@
+docker --version
+docker pull ubuntu:latest
+docker run -it -p 9090:80 --name container_name ubuntu:latest
+appt update
+ls
+cd usr
+ls
+cd share
+ls
+apt update
+apt install nginx -y
+nginx
+cd nginx
+ls
+cd html
+ls
+nano index.html
+apt install nano
+EDIT H1 TAG AS PER YOUR WISH
+Ctrl O Ctrl X
+nano /etc/nginx/sites-enabled/default
+change root /var/www/html; to root /usr/share/nginx/html;
+ctrl o ctrl x
+nginx -s reload
+curl htt://localhost
+apt install curl and try again if it fails.
